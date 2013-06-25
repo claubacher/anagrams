@@ -1,14 +1,7 @@
-# require_relative '../../Rakefile'
 class Word < ActiveRecord::Base
-  # Remember to create a migration!
-  def anagrams
-    our_word = self.word.split("").sort
-    anagram_collection = []
-    Word.all.each do |dict_word|
-      if dict_word.word.split("").sort == our_word
-        anagram_collection << dict_word.word
-      end
-    end
-    anagram_collection
+  # This bit here takes forever and I couldn't figure out how to
+  # make it stop running, so ctrl-C as soon as you hit 230000 or so.
+  before_save do |word|
+    word.canonical = word.word.split("").sort.join
   end
 end
